@@ -1,0 +1,28 @@
+{
+  "name": "tryton-orion",
+  "homepage": "https://www.presik.com",
+  "authors": [
+    "Presik"
+  ],
+  "description": "Tryton Client",
+  "main": "public/index.html",
+  "keywords": [
+    "tryton",
+    "design",
+    "semantic-ui",
+    "material",
+    "design",
+    "google",
+    "twitter"
+  ],
+  "license": "GPL+3 License",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "build"
+  ],
+  "private": false
+}

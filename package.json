@@ -1,0 +1,60 @@
+{
+  "name": "tryton-orion",
+  "title": "orion",
+  "version": "0.0.1",
+  "description": "Tryton Web Client (React)",
+  "private": false,
+  "main": "dist/index.js",
+  "dependencies": {
+    "chart.js": "^2.8.0",
+    "chartjs-plugin-annotation": "^0.5.7",
+    "history": "4.10.1",
+    "moment": "^2.25.1",
+    "prop-types": "15.7.1",
+    "react": "16.8.1",
+    "react-big-scheduler": "^0.2.6",
+    "react-chartjs-2": "^2.7.6",
+    "react-datasheet": "^1.4.0",
+    "react-dom": "16.8.1",
+    "react-dropzone": "^10.2.1",
+    "react-html5-camera-photo": "^1.4.3",
+    "react-intl": "^2.8.0",
+    "react-router-dom": "5.1.2",
+    "react-scripts": "3.1.0",
+    "semantic-ui-react": "^0.88.2",
+    "store": "^2.0.12"
+  },
+  "scripts": {
+    "start": "NODE_PATH=src/ HTTPS=true react-scripts start",
+    "start-dev": "NODE_PATH=src/ REACT_APP_ENV=development react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+    "lint:check": "eslint . --ext=js,jsx;  exit 0",
+    "lint:fix": "eslint . --ext=js,jsx --fix;  exit 0",
+    "build-package": "npm run build-package-css && babel src --out-dir dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:camux/orion.git"
+  },
+  "keywords": [],
+  "author": "Oscar Alvarez <oscar.alvaez.montero@gmail.com> (https://github.com/camux/orion)",
+  "license": "GPL-3.0+",
+  "bugs": {
+    "url": "https://github.com/camux/orion/issues"
+  },
+  "homepage": "https://github.com/camux/orion",
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "eslint-config-prettier": "6.10.1",
+    "eslint-plugin-prettier": "3.1.2",
+    "eslint-plugin-react": "^7.19.0"
+  }
+}

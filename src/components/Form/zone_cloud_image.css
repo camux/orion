@@ -1,0 +1,17 @@
+
+.Div-drop-zone {
+  display: inline-block;
+  margin: 25px;
+}
+
+.p {
+  margin: 0;
+  line-height: 0;
+  font-size: 40px;
+}
+
+a {
+  font-size: 12px;
+  margin: 0;
+  line-height: 0;
+}
