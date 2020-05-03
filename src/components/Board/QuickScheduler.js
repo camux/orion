@@ -10,7 +10,7 @@ import 'components/Scheduler/scheduler.css'
 
 import ItemPopoverTemplate from 'components/Scheduler/ItemPopoverTemplate'
 import CellHeaderTemplate from 'components/Scheduler/CellHeaderTemplate'
-import client from 'client'
+import proxy from 'proxy'
 
 
 class QuickScheduler extends Component {
@@ -63,7 +63,7 @@ class QuickScheduler extends Component {
     // const args = {
     //   start_date: start_date
     // }
-    const res = await client.model.get_method(model, 'get_calendar')
+    const res = await proxy.get_method(model, 'get_calendar')
     const resources = res[0]
     const events = res[1]
 

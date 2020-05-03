@@ -6,9 +6,9 @@ import { FormattedMessage as FM } from 'react-intl'
 
 import FormPage from './FormPage'
 import TextField from 'components/Form/TextField'
-import client from 'client'
+import proxy from 'proxy'
 import store from 'store'
-import presikLogo from 'assets/img/tryton.svg'
+import trytonLogo from 'assets/img/tryton.svg'
 
 class LoginScreen extends Component {
   constructor (props) {
@@ -25,14 +25,17 @@ class LoginScreen extends Component {
   }
 
   handleStartSession = async () => {
-    let { username, database, password }  = this.state
+    const { username, database, password }  = this.state
     const history =  this.props.history
-    let res = await client.proxy.login(database, username, password)
-
-    if (res && res.user) {
-      res['db'] = database
-      store.set('ctxSession', res)
-      history.push(`/${database}/admin/dashboard`)
+    const res = await proxy.login(database, username, password)
+    if (res) {
+      let session = {}
+      session['db'] = database
+      session['login'] = username
+      session['user_id'] = res[0]
+      session['session'] = res[1]
+      store.set('ctxSession', session)
+      history.push(`/${database}/`)
       this.props.handleStartSession()
     } else {
       this.setState({
@@ -59,7 +62,7 @@ class LoginScreen extends Component {
     return (
       <Grid centered columns={1}>
         <Grid.Column mobile={16} tablet={8} computer={4} >
-          <Image src={presikLogo} alt='PRESIK LOGO' width='300' style={styles.img}/>
+          <Image src={trytonLogo} alt='Tryton Orion' width='300' style={styles.img}/>
           <FormPage
             title='login.start_session'
             formMessage={formMessage}
@@ -133,7 +136,6 @@ const styles = {
     display: 'block'
   },
   field: {
-    // display: 'grid',
     padding: '10px 10px 10px 0'
   }
 }

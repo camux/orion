@@ -6,7 +6,7 @@ import { HeaderView, BodyView, MessageSection, TableContext } from 'components/B
 import GridBoard from 'components/Grid/GridBoard'
 import Modal from 'components/Modal/Modal'
 import { clientUpdate, clientAdd, clientRemove } from 'helpers'
-import client from 'client'
+import proxy from 'proxy'
 import { color } from 'theme'
 import ctxStore from 'context'
 
@@ -130,7 +130,7 @@ class Board extends Component {
     }
 
     if (domain) {
-      records = await client.proxy.search(model, domain)
+      records = await proxy.search(model, domain)
       this.setState({records})
     }
   }
@@ -166,7 +166,7 @@ class Board extends Component {
   }
 
   async triggerFunction (method) {
-    const new_values = await client.proxy.get_method(
+    const new_values = await proxy.get_method(
         this.props.model, method, this.storeRecord, this.props.context
     )
     if (!new_values) return
@@ -187,7 +187,7 @@ class Board extends Component {
     }
 
     if (this.storeRecord.id) {
-      const record = await client.proxy.action(this.props.model, this.storeRecord, action)
+      const record = await proxy.action(this.props.model, this.storeRecord, action)
       if (record.id) {
         let newState = {
           activeRecord: record,

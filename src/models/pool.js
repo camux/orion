@@ -2,14 +2,14 @@
 import React from 'react'
 
 import Board from 'components/Board/Board'
-import client from 'client'
+import proxy from 'proxy'
 
 
 export const getModels = async function () {
   let models = []
   const paths = window.location.pathname.split('/')
   const database = paths[1]
-  const access_models = await client.proxy.get_models()
+  const access_models = await proxy.get_models()
 
   if (!access_models) {
     return null

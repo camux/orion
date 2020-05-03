@@ -1,7 +1,7 @@
 
 import en from './en'
 import es from './es'
-import client from 'client'
+import proxy from 'proxy'
 
 let locale = (navigator.languages && navigator.languages[0]) ||
     navigator.language || navigator.consumerLanguage || 'en'
@@ -36,7 +36,7 @@ const messages = async function () {
     localeLang = 'en'
   }
 
-  const langs = await client.proxy.get_translations()
+  const langs = await proxy.get_translations()
   if (!langs) return langBase
 
   // First set all english translations as default

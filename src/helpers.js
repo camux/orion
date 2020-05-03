@@ -1,5 +1,5 @@
 
-import client from 'client'
+import proxy from 'proxy'
 import validateForm from './tools/validateForm'
 
 export const clientRemove = async (model, recId) => {
@@ -8,7 +8,7 @@ export const clientRemove = async (model, recId) => {
     ids: [recId],
     model: model,
   }
-  const record = await client.proxy.remove(toRemove)
+  const record = await proxy.remove(toRemove)
   return record
 }
 
@@ -48,7 +48,7 @@ export const clientUpdate = async (model, storeData, storeRequired, record) => {
     }
 
 
-    const record = await client.proxy.save(data)
+    const record = await proxy.save(data)
     if (record) {
       res['record'] = record
       res['id'] = record.id
@@ -69,7 +69,7 @@ export const clientAdd = async (model, storeData, storeRequired) => {
 
   const isValid = await validateForm('create', storeData, storeRequired)
   if (isValid === 'ok') {
-    const record = await client.proxy.create(model, storeData)
+    const record = await proxy.create(model, storeData)
     res['record'] = record
     res['id'] = record.id
   } else {
@@ -81,7 +81,7 @@ export const clientAdd = async (model, storeData, storeRequired) => {
 }
 
 export async function searchSelection(model, domain) {
-  const records = await client.proxy.search_selection(model, domain)
+  const records = await proxy.search_selection(model, domain)
   const _items = records.map(function(r) {
     return { key: r.id, value: r.id, text: r.rec_name || r.name }
   })

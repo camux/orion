@@ -2,9 +2,40 @@
 import fetchAPI from 'fetch_api'
 import store from 'store'
 
-export default class Proxy {
-  constructor (options) {
-    this.api = options.api
+import tools from 'tools/common'
+const env = require('./env')
+
+class Proxy {
+  constructor () {
+    this.api = env.api
+    this.id = 0
+  }
+
+  async login (database, user, passwd) {
+    const data = {
+      'method': 'common.db.login',
+      'params': [user, {password: passwd}, 'en']
+    }
+    const opts = {
+      method: 'POST',
+      uri: `/`,
+      body: data
+    }
+    return await fetchAPI(this.api, opts, database)
+  }
+
+  async get_preferences () {
+    const client_id = tools.uuid4()
+    const opts = {
+      method: 'POST',
+      uri: `/`,
+      body: {
+        'id': this.id++,
+        'method': 'model.res.user.get_preferences',
+        'params': [true, {client: client_id}],
+      }
+    }
+    return await fetchAPI(this.api, opts)
   }
 
   async save (data) {
@@ -107,7 +138,7 @@ export default class Proxy {
       context: ctx
     }
 
-    let opts = {
+    const opts = {
       method: 'POST',
       uri: `/create`,
       body: toCreate
@@ -116,16 +147,8 @@ export default class Proxy {
     return await fetchAPI(this.api, opts)
   }
 
-  async login (database, user, passwd) {
-    let opts = {
-      method: 'GET',
-      uri: `/login?user=${user}&passwd=${passwd}`
-    }
-    return await fetchAPI(this.api, opts, database)
-  }
-
   async get_form(name) {
-    let opts = {
+    const opts = {
       method: 'GET',
       uri: `/webform?model=${name}`
     }
@@ -181,3 +204,5 @@ export default class Proxy {
   }
 
 }
+
+export default new Proxy()

@@ -6,7 +6,7 @@ import { HeaderView, BodyView, TableContext } from 'components/Board/BoardContex
 import GridBoard from 'components/Grid/GridBoard'
 import Modal from 'components/Modal/Modal'
 import { clientRemove } from 'helpers'
-import client from 'client'
+import proxy from 'proxy'
 import { color } from 'theme'
 import ctxStore from 'context'
 
@@ -156,7 +156,7 @@ class SubBoard extends Component {
       return
     }
 
-    const record = await client.proxy.action(this.props.model, activeRecord, action)
+    const record = await proxy.action(this.props.model, activeRecord, action)
     if (record.id) {
       let newState = {
         activeRecord: record,
@@ -198,7 +198,7 @@ class SubBoard extends Component {
   }
 
   async triggerFunction (method, activeRecord) {
-    const new_values = await client.proxy.get_method(
+    const new_values = await proxy.get_method(
       this.props.model, method, activeRecord, this.props.parentRecord
     )
     for (const [k, v] of Object.entries(new_values)) {

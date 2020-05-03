@@ -7,7 +7,7 @@ import SegLoader from './SegLoader'
 import BarChart from 'components/Chart/BarChart'
 import LineChart from 'components/Chart/LineChart'
 import InfoChart from 'components/Chart/InfoChart'
-import client from 'client'
+import proxy from 'proxy'
 
 function SegChart (props) {
   let [data, setData] = useState([])
@@ -21,7 +21,7 @@ function SegChart (props) {
   async function fetchToAPI() {
     let data
     if (!props.fake) {
-      data = await client.proxy.report_data(props.id)
+      data = await proxy.report_data(props.id)
     } else {
       data = props.data
       console.log(props)

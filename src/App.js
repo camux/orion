@@ -12,6 +12,7 @@ import Login from 'views/Login/LoginScreen'
 import WebForm from 'views/WebForm/WebForm'
 import intl from './i18n/messages'
 import tools from 'tools/common'
+import proxy from 'proxy'
 
 const hist = createBrowserHistory()
 
@@ -24,7 +25,7 @@ console.log('Language => ', lang)
 console.log('App version => ', process.env.REACT_APP_VERSION)
 
 
-class AppWeb extends Component {
+class OrionApp extends Component {
   constructor (props) {
     super(props)
     let [messages, localeLang] = intl.getBaseLang()
@@ -35,11 +36,19 @@ class AppWeb extends Component {
     }
   }
 
+  componentDidMount () {
+    if (this.state.session) {
+      this.handleStartSession()
+    }
+  }
+
   handleStartSession = async () => {
-    const messages_ = await intl.messages()
-    this.setState({
-      translations: messages_
-    })
+    // const messages_ = await intl.messages()
+    // this.setState({
+    //   translations: messages_
+    // })
+    const res = await proxy.get_preferences()
+    console.log('Res . .. . .', res)
   }
 
   render () {
@@ -50,12 +59,12 @@ class AppWeb extends Component {
         <Router history={hist}>
           <Switch>
             <Route exact path="/">
-            { session && session.user?
-              <Redirect to={`/${session.db}/admin`} />
+            { session && session.user_id?
+              <Redirect to={`/${session.db}`} />
               : <Redirect to='/login' />
             }
             </Route>
-            <Route path='/:db/admin'>
+            <Route path='/:db'>
               < Admin />
             </Route>
             <Route path='/login'>
@@ -70,4 +79,4 @@ class AppWeb extends Component {
   }
 }
 
-export default AppWeb
+export default OrionApp

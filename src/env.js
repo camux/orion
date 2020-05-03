@@ -1,6 +1,6 @@
 
-let apiHost = process.env.REACT_APP_TRYTON_API_HOST
-let apiPort = process.env.REACT_APP_TRYTON_API_PORT
+let apiHost = process.env.REACT_APP_ORION_API_HOST
+let apiPort = process.env.REACT_APP_ORION_API_PORT
 
 const api_key = process.env.REACT_APP_TRYTON_API_KEY
 

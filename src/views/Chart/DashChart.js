@@ -5,7 +5,7 @@ import { Grid } from 'semantic-ui-react'
 import SegChart from 'components/Segment/SegChart'
 import { fakeDataInfo, fakeDataBar, fakeDataLine } from 'views/Chart/fakeData'
 
-import client from 'client'
+import proxy from 'proxy'
 import { color } from 'theme'
 
 
@@ -14,7 +14,7 @@ function DashChart (props) {
   const [fake, setFake] = useState(false)
 
   async function getReports() {
-    let records = await client.proxy.dash_reports()
+    let records = await proxy.dash_reports()
     console.log(records)
     if (records.length === 0) {
       setFake(true)

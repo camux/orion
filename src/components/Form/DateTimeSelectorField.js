@@ -6,7 +6,7 @@ import { FormattedMessage as FM } from 'react-intl'
 
 import FormField from './FormField'
 import tools from 'tools/common'
-import client from 'client'
+import proxy from 'proxy'
 
 
 function DateTimeSelectorField (props) {
@@ -31,7 +31,7 @@ function DateTimeSelectorField (props) {
         args[d] = value
       }
       args = JSON.stringify(args)
-      const res = await client.model.get_method(props.model, props.data_source, args)
+      const res = await proxy.get_method(props.model, props.data_source, args)
       setHours(res)
     }
   }

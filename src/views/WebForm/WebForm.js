@@ -6,7 +6,7 @@ import { IntlProvider } from 'react-intl'
 
 import Loading from 'components/Tools/Loading'
 import Board from 'components/Board/Board'
-import client from 'client'
+import proxy from 'proxy'
 import tools from 'tools/common'
 import intl from 'i18n/messages'
 
@@ -23,7 +23,7 @@ function WebForm (props) {
 
   async function getFormRoutes() {
     const { model } = props.match.params
-    const formView = await client.proxy.get_form(model)
+    const formView = await proxy.get_form(model)
     const database = tools.getDatabase()
 
     const webFormRoute = [

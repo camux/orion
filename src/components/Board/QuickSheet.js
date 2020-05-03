@@ -7,7 +7,7 @@ import moment from 'moment'
 import store from 'store'
 
 import { color } from 'theme'
-import client from 'client'
+import proxy from 'proxy'
 import 'react-datasheet/lib/react-datasheet.css'
 import 'components/Sheet/data_sheet.css'
 
@@ -39,7 +39,7 @@ class QuickSheet extends Component {
     const args = {
       period: selectedOption
     }
-    const [headers, data, validValues] = await client.proxy.get_sheet(model, args)
+    const [headers, data, validValues] = await proxy.get_sheet(model, args)
     this.setState({ headers, data, selectedOption, validValues })
   }
 
@@ -52,7 +52,7 @@ class QuickSheet extends Component {
         ('type', '=', 'standard'),
         ('fiscalyear.company', '=', ${session.company}),
     ]`
-    const _periods = await client.proxy.search('account.period', dom)
+    const _periods = await proxy.search('account.period', dom)
     let periods = []
     for (const p of _periods) {
       periods.push({ key: p['id'], value: p['id'], text: p['name'] })
@@ -75,7 +75,7 @@ class QuickSheet extends Component {
       model: 'surveillance.schedule.shift',
       values: Array.from(this.sheetStore.values()),
     }
-    const res = await client.proxy.saveMany(data)
+    const res = await proxy.saveMany(data)
     this.sheetStore.clear()
     const messageCtx = {
       type: 'msgInfo',

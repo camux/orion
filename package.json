@@ -6,6 +6,7 @@
   "private": false,
   "main": "dist/index.js",
   "dependencies": {
+    "axios": "^0.19.2",
     "chart.js": "^2.8.0",
     "chartjs-plugin-annotation": "^0.5.7",
     "history": "4.10.1",
@@ -26,7 +27,7 @@
   },
   "scripts": {
     "start": "NODE_PATH=src/ HTTPS=true react-scripts start",
-    "start-dev": "NODE_PATH=src/ REACT_APP_ENV=development react-scripts start",
+    "start-dev": "PORT=3000 NODE_PATH=src/ REACT_APP_ENV=development react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",

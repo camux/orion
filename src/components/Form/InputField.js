@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Input } from 'semantic-ui-react'
 
 import FormField from './FormField'
-import client from 'client'
+import proxy from 'proxy'
 
 function InputField (props) {
   let _value = ''
@@ -17,7 +17,7 @@ function InputField (props) {
   const [valid, setValid] = useState(false)
 
   async function fetchToAPI(clause) {
-    const record = await client.proxy.search_record(props.submodel, clause)
+    const record = await proxy.search_record(props.submodel, clause)
     console.log('XXXX >>', record)
     if (record ) {
       if (record.active && record.active == false) {
