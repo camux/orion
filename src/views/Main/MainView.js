@@ -9,6 +9,7 @@ import Footer from './Footer'
 import Loading from 'components/Tools/Loading'
 import getRoutes from 'routes'
 import intl from 'i18n/messages'
+import proxy from 'proxy'
 
 
 class Dashboard extends Component {
@@ -53,17 +54,28 @@ class Dashboard extends Component {
   async componentDidMount() {
     window.addEventListener('resize', this.resizeFunction)
 
-    const messages_ = await intl.messages()
-    const _routes = await this.getRoutes()
-    if (!_routes) {
-      this.props.history.push('/login')
-      return
-    }
-    this.setState({
-      translations: messages_,
-      routes: _routes[0],
-      dashRoutes: _routes[1]
-    })
+    const prefs = await proxy.get_preferences()
+    console.log('Prefs . .. . .', models)
+    const models = await proxy.load_models(prefs)
+    console.log('Models . .. . .', models)
+    const icons = await proxy.model('ir.ui.icon', 'list_icons', [])
+    const mapIcons = new Map(icons)
+    console.log('Icons . .. . .', mapIcons)
+    const history = await proxy.model('ir.model', 'list_history', [])
+    console.log('History . .. . .', history)
+    const searches = await proxy.model('ir.ui.view_search', 'get_search', [])
+    console.log('Searches . .. . .', searches)
+    // const messages_ = await intl.messages()
+    // const _routes = await this.getRoutes()
+    // if (!_routes) {
+    //   this.props.history.push('/login')
+    //   return
+    // }
+    // this.setState({
+    //   translations: messages_,
+    //   routes: _routes[0],
+    //   dashRoutes: _routes[1]
+    // })
   }
 
   componentWillUnmount() {

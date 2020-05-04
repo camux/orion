@@ -7,9 +7,8 @@ import store from 'store'
 import en from 'react-intl/locale-data/en'
 import es from 'react-intl/locale-data/es'
 
-import Admin from 'views/Admin/Admin'
+import MainView from 'views/Main/MainView'
 import Login from 'views/Login/LoginScreen'
-import WebForm from 'views/WebForm/WebForm'
 import intl from './i18n/messages'
 import tools from 'tools/common'
 import proxy from 'proxy'
@@ -31,8 +30,9 @@ class OrionApp extends Component {
     let [messages, localeLang] = intl.getBaseLang()
     this.state = {
       translations: messages,
+      session: store.get('ctxSession'),
+      preferences: null,
       locale: localeLang,
-      session: store.get('ctxSession')
     }
   }
 
@@ -44,15 +44,15 @@ class OrionApp extends Component {
 
   handleStartSession = async () => {
     // const messages_ = await intl.messages()
+    // const prefs = await proxy.get_preferences()
+    // console.log('Prefs . .. . .', prefs)
     // this.setState({
-    //   translations: messages_
+    //   preferences: prefs
     // })
-    const res = await proxy.get_preferences()
-    console.log('Res . .. . .', res)
   }
 
   render () {
-    const { translations, locale, session } = this.state
+    const { translations, locale, session, preferences } = this.state
     const database = tools.getDatabase()
     return (
       <IntlProvider locale={locale} messages={translations}>
@@ -61,17 +61,13 @@ class OrionApp extends Component {
             <Route exact path="/">
             { session && session.user_id?
               <Redirect to={`/${session.db}`} />
-              : <Redirect to='/login' />
+              :
+              <Login handleStartSession={this.handleStartSession}/>
             }
             </Route>
             <Route path='/:db'>
-              < Admin />
+              < MainView preferences={preferences}/>
             </Route>
-            <Route path='/login'>
-              <Login handleStartSession={this.handleStartSession}/>
-            </Route>
-            <Route path={`/${database}/web/:model/form`} component={WebForm} />
-            <Redirect from={`/web/${database}/:model/form`} to={`/${database}/web/:model/form`} />
           </Switch>
         </Router>
       </IntlProvider>
