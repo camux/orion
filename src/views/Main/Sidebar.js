@@ -10,23 +10,32 @@ class DashSidebar extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      activeIndex: 0,
+      activeIndex: [],
     }
     this.handleClick = this.handleClick.bind(this)
     this.getMenuTree = this.getMenuTree.bind(this)
-    // const { menu, visible } = props
   }
 
   handleClick = (e, titleProps) => {
     const { index } = titleProps
     const { activeIndex } = this.state
-    const newIndex = activeIndex === index ? -1 : index
-    this.setState({ activeIndex: newIndex })
+    console.log()
+    if (activeIndex.includes(index)) {
+      activeIndex.splice(activeIndex.indexOf(index), 1)
+    } else {
+      activeIndex.push(index)
+    }
+    this.setState({ activeIndex: activeIndex })
+  }
+
+  runAction = () => {
+    console.log('Run Action.....')
   }
 
   getMenuTree = (activeIndex) => {
     const menuTree = this.props.menu.map((menuItem, key) => {
-      const _getItem = (item, index) => {
+      let onClick
+      const _getItem = (item, index, styleX) => {
         let subitems = null
         let content = null
         if (item.childs) {
@@ -34,25 +43,28 @@ class DashSidebar extends Component {
           for (const i of item.childs) {
             subitems.push(_getItem(i, i))
           }
-          content = (<Accordion.Content> { subitems } </Accordion.Content>)
-          // return subelements
+          onClick = this.handleClick
+        } else {
+          onClick = this.runAction
         }
 
-        return (
+        return [
           <Accordion.Title
             key={index}
-            active={false}
+            active={activeIndex.includes(index)}
             index={index}
-            onClick={this.handleClick}
+            onClick={onClick}
+            style={styleX || styles.item}
           >
             { item.childs && <Icon name='dropdown' /> }
             { item.name || 'myChild-' + index }
-
-            { content }
-          </Accordion.Title>
-        )
+          </Accordion.Title>,
+          <Accordion.Content key={key} active={activeIndex.includes(index)}>
+            { subitems }
+          </Accordion.Content>
+        ]
       }
-      return _getItem(menuItem, menuItem.id)
+      return _getItem(menuItem, menuItem.id, styles.main_item)
     })
     return menuTree
   }
@@ -70,7 +82,7 @@ class DashSidebar extends Component {
           visible={this.props.visible}
           >
           <img src={logo} alt='logo' style={styles.img}/>
-          <Accordion inverted>
+          <Accordion inverted exclusive={false} >
             { this.getMenuTree(activeIndex) }
           </Accordion>
         </Sidebar>
@@ -95,6 +107,16 @@ const styles = {
   },
   pushable: {
     display: 'contents',
+  },
+  item: {
+    display: 'flex',
+    paddingLeft: 20
+  },
+  main_item: {
+    display: 'flex',
+    paddingLeft: 20,
+    fontWeight: 'bold',
+    borderTop: '0.5px solid #373737',
   }
 }
 
