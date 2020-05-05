@@ -8,9 +8,9 @@ import { color } from 'theme'
 function NavBar(props) {
   const session = store.get('ctxSession')
 
-  function handleMenuUser() {
+  function handleLogout() {
     store.remove('ctxSession')
-    props.history.push('/login')
+    props.history.push('/')
   }
 
   function handleSidebarToggle() {
@@ -31,7 +31,7 @@ function NavBar(props) {
         <Grid.Column style={styles.colUser} largeScreen={2} mobile={3}>
           <Dropdown icon='user' trigger={username} style={styles.drop}>
             <Dropdown.Menu>
-              <Dropdown.Item text='Log out' onClick={handleMenuUser}/>
+              <Dropdown.Item text='Log out' onClick={handleLogout}/>
             </Dropdown.Menu>
           </Dropdown>
         </Grid.Column>

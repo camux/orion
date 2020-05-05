@@ -63,6 +63,19 @@ class Proxy {
     return await fetchAPI(this.api, opts)
   }
 
+  async read (model, fields_ids, fields_names) {
+    let opts = {
+      method: 'POST',
+      uri: '/',
+      body: {
+        'method': `model.${model}.read`,
+        'params': [fields_ids, fields_names, this.context],
+      }
+    }
+
+    return await fetchAPI(this.api, opts)
+  }
+
   // async save (data) {
   //   data['context'] = store.get('ctxSession')
   //   let opts = {
@@ -107,14 +120,7 @@ class Proxy {
   //   return await fetchAPI(this.api, opts)
   // }
   //
-  // async search (model, domain, selection) {
-  //   let opts = {
-  //     method: 'GET',
-  //     uri: `/search?model=${model}&domain=${domain}&selection=${selection}`,
-  //   }
-  //
-  //   return await fetchAPI(this.api, opts)
-  // }
+
   //
   // async search_selection (model, domain, selection) {
   //   let opts = {

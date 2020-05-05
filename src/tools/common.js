@@ -86,6 +86,13 @@ const uuid4 = () => {
     })
 }
 
+const pysonDecoder = (data) => {
+  var reviver = function(k, v) {
+    return v
+  }
+  return JSON.parse(data, reviver);
+}
+
 const tools = {
   fmtCurrency,
   fmtDate,
@@ -97,7 +104,8 @@ const tools = {
   dateToday,
   fmtDateAndTime2Tryton,
   getDatabase,
-  uuid4
+  uuid4,
+  pysonDecoder
 }
 
 export default tools
